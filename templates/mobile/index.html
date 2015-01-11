@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>My App</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="{{ static('framework7.min.css') }}">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="{{ static('my-app.css') }}">
+  </head>
+  <body class="theme-pink">
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="panel panel-left panel-reveal">
+      <div class="content-block">
+        <div class="content-block-title">Список стран</div>
+        <p>Left panel content goes here</p>
+
+      </div>
+    </div>
+    <!-- Right panel with cover effect-->
+    <div class="panel panel-right panel-cover">
+      <div class="content-block">
+        <p>Right panel content goes here</p>
+      </div>
+    </div>
+    <!-- Views-->
+    <div class="views">
+      <!-- Your main view, should have "view-main" class-->
+      <div class="view view-main">
+        <!-- Top Navbar-->
+        <div class="navbar">
+          <div class="navbar-inner">
+            <!-- We have home navbar without left link-->
+            <!-- <div class="center sliding">Awesome App</div> -->
+            <div class="center sliding">
+
+            <div class="item-input">
+            <form class="list-block store-data" action="#">
+              <select name="gender" onchange="if (this.value) window.location.href=this.value">
+  {%- if not title -%}
+    <option value="">Выбрать страну</option>
+  {%- else -%}
+    <option value="/">На главную</option>
+  {%- endif -%}
+
+
+  {%- for country in countries -%}
+    {%- if countries[country] == title -%}
+      {%- set selected = "selected" -%}
+    {%- else -%}
+      {%- set selected = "" -%}
+    {%- endif -%}
+
+    <option {{selected}} value="/{{country}}">{{countries[country]}}</option>
+  {%- endfor %}
+
+  </select>
+            </form>
+            </div>
+
+            </div>
+            <div class="right">
+              <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+        <div class="pages navbar-through toolbar-through">
+          <!-- Page, data-page contains page name-->
+          <div data-page="index" class="page">
+            <!-- Scrollable page content-->
+            <div class="page-content">
+
+        <!-- List View -->
+<div class="content-block-title">Новые предложения</div>
+<div class="list-block accordion-list">
+  <ul>
+  {%- for tour in tours recursive -%}
+    {% set itemTitle   = tour['_title'].split(',') %}
+    {% set destination = itemTitle[0] + ',' + itemTitle[1] %}
+    {% set departure   = itemTitle[2] %}
+    {% set period      = itemTitle[3] %}
+    {% set priceFrom   = itemTitle[4] | safe %}
+
+
+    <li class="accordion-item"><a href="#" class="item-content item-link">
+        <div class="item-inner">
+          <div class="item-title">{{ tour['_title'] | trim }}</div>
+        </div></a>
+      <div class="accordion-item-content">
+        <div class="content-block">
+          <small> {{destination}} {{departure}} {{period}} {{priceFrom}}</small>
+          <small>Размещено: {{ tour['_published'] | trim }}</small>
+          <div class="item-media"><img src="{{ tour['imageUrl'] }}" alt="tour['_title']" width="100%"></div>
+
+          {% for item in tour['items'] %}
+          <dd>
+            {% if not item.split('*')[1] is defined %}
+              {{ item | trim }}
+            {% else %}
+              {% set resp = tour['_title'].split(',')[0].split(' ')[0] + ' ' + item.split('*')[0] %}
+
+              <!-- <span onClick="var rating=getRating('{{resp}}');">[x]</span> -->
+
+              <a title="Прочитать об отеле на сайте TopHotels.ru" target="blank" href="https://www.google.ru/#newwindow=1&q={{resp|safe|escape}} site:tophotels.ru&safe=off&btnI">{{ item.split('*')[0] }}</a>
+              {{ item.split('*')[1]|trim }}
+            {% endif %}
+          </dd>
+          {%- endfor %}
+
+          <p>{{ tour['description'] }}</p>
+
+          <p class="buttons-row">
+          {% for tag in tour['tags'] %}
+            <a href="" class="button">{{ tag | trim }}</a>
+          {% endfor %}
+          </p>
+
+        </div>
+      </div>
+    </li>
+
+  {%- endfor %}
+
+
+  </ul>
+</div>
+            </div>
+          </div>
+        </div>
+        <!-- Bottom Toolbar-->
+        <div class="toolbar">
+          <div class="toolbar-inner"><a href="#" class="link">Link 1</a><a href="#" class="link">Link 2</a></div>
+        </div>
+      </div>
+    </div>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="{{ static('framework7.min.js') }}"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="{{ static('my-app.js') }}"></script>
+  </body>
+</html>
