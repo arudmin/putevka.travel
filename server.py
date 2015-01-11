@@ -12,23 +12,10 @@ from lxml.etree import tostring
 app = Flask(__name__)
 Compress(app)
 
-def json(data):
-  return Response(JSON.dumps(data), mimetype="application/json; charset=utf-8")
-
-def getNameFromGoogle(param):
-    host  = 'www.tophotels.ru/main/hotel/al'
-    url   = "https://www.google.com/search?q=%s&oq=%s&sourceid=chrome&es_sm=119&ie=UTF-8#newwindow=1&safe=off&q=%s+site:tophotels.ru" % (param, param, param)
-    r     = requests.get(url)
-    tree  = html.fromstring(r.text)
-    # return r.text
-    try:
-      url   = tree.xpath('.//div[@id="ires"]//h3//a/@href')[0]
-      title = tree.xpath('.//div[@id="ires"]//h3//b')[0].text
-      if host in url:
-        return redirect(url_for('getRatingTophotels', query=title.strip(), fromGoogle=1, fromGETcountry=param.split()[0]))
-    except:
-      pass
-    return json({'status': 404})
+# @app.before_request
+# def beforerequest():
+  # if 'iPhone' in request.headers['User-Agent'] and 'mobile' not in request.path:
+    # return redirect(url_for('mobile'))
 
 @app.route('/api/rating/tophotels/<query>')
 def getRatingTophotels(query=None, country=''):
@@ -93,11 +80,16 @@ def main(country=None):
   return json(data)
 
 @app.route('/')
+@app.route('/mobile')
+@app.route('/mobile/')
 @app.route('/<country>')
 def mainApp(country=None):
   data = getData(country)
+  # print data
   if (request.headers.get('Content-Type') == 'application/json'):
-    return json(data)    
+    return json(data)
+  if ('iPhone' in request.headers['User-Agent']):
+    return html_minify(render_template('mobile/index.html', **data))
   return html_minify(render_template('index.html', **data))
 
 def getData(country=None):
@@ -174,7 +166,35 @@ def getData(country=None):
 
   return {'title': title, 'tours': tours, 'countries': countries}
 
+def json(data):
+  return Response(JSON.dumps(data), mimetype="application/json; charset=utf-8")
 
+def getNameFromGoogle(param):
+    host  = 'www.tophotels.ru/main/hotel/al'
+    url   = "https://www.google.com/search?q=%s&oq=%s&sourceid=chrome&es_sm=119&ie=UTF-8#newwindow=1&safe=off&q=%s+site:tophotels.ru" % (param, param, param)
+    r     = requests.get(url)
+    tree  = html.fromstring(r.text)
+    # return r.text
+    try:
+      url   = tree.xpath('.//div[@id="ires"]//h3//a/@href')[0]
+      title = tree.xpath('.//div[@id="ires"]//h3//b')[0].text
+      if host in url:
+        return redirect(url_for('getRatingTophotels', query=title.strip(), fromGoogle=1, fromGETcountry=param.split()[0]))
+    except:
+      pass
+    return json({'status': 404})
+
+
+
+
+
+
+
+
+
+app.jinja_env.globals['static'] = (
+    lambda filename: url_for('static', filename = filename)
+)
 
 if __name__ == '__main__':
   app.debug = True
