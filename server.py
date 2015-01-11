@@ -87,7 +87,7 @@ def mainApp(country=None):
   data = getData(country)
   # print data
 
-  mobile_platforms = ('ipad', 'iphone') 
+  mobile_platforms = ('ipad', 'iphone', 'android') 
 
   if (request.headers.get('Content-Type') == 'application/json'):
     return json(data)
