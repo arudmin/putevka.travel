@@ -80,17 +80,21 @@ def main(country=None):
   return json(data)
 
 @app.route('/')
-@app.route('/mobile')
-@app.route('/mobile/')
+# @app.route('/mobile')
+# @app.route('/mobile/')
 @app.route('/<country>')
 def mainApp(country=None):
   data = getData(country)
   # print data
+
+  mobile_platforms = ('ipad', 'iphone') 
+
   if (request.headers.get('Content-Type') == 'application/json'):
     return json(data)
 
-  mobile_platforms = ['iPad', 'iPhone']
-  if (p for p in mobile_platforms if p in request.user_agent.platform):
+  # if any(p in mobile_platforms for p in request.user_agent.platform):
+  # if ('iphone' in request.user_agent.platform):
+  if any(p in request.user_agent.platform for p in mobile_platforms):
     return html_minify(render_template('mobile/index.html', **data))
 
   return html_minify(render_template('index.html', **data))

@@ -64,7 +64,7 @@
 			{% else %}
 				{% set resp = tour['_title'].split(',')[0].split(' ')[0] + ' ' + item.split('*')[0] %}
 
-				<span onClick="var rating=getRating('{{resp}}');">[x]</span>
+				<!-- <span onClick="var rating=getRating('{{resp}}');">[x]</span> -->
 
 				<a title="Прочитать об отеле на сайте TopHotels.ru" target="blank" href="https://www.google.ru/#newwindow=1&q={{resp|safe|escape}} site:tophotels.ru&safe=off&btnI">{{ item.split('*')[0] }}</a>
 				{{ item.split('*')[1]|trim }}
