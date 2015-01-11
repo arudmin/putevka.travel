@@ -20,8 +20,23 @@
     <div class="panel panel-left panel-reveal">
       <div class="content-block">
         <div class="content-block-title">Список стран</div>
-        <p>Left panel content goes here</p>
-
+        <!-- <p>Left panel content goes here</p> -->
+        <div class="list-block media-list inset">
+        <ul>
+        {%- for country in countries -%}
+          {%- if countries[country] == title -%}
+           {%- set selected = "selected" -%}
+          {%- else -%}
+           {%- set selected = "" -%}
+          {%- endif -%}
+          <li>
+            <a {{selected}} class="item-link item-content" href="/{{country}}">
+               <div class="select-country close-panel item-title">{{countries[country]}}</div>
+            </a>
+          </li>
+        {%- endfor %}
+        </ul>
+        </div>
       </div>
     </div>
     <!-- Right panel with cover effect-->

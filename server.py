@@ -88,8 +88,11 @@ def mainApp(country=None):
   # print data
   if (request.headers.get('Content-Type') == 'application/json'):
     return json(data)
-  if ('iPhone' in request.headers['User-Agent']):
+
+  mobile_platforms = ['iPad', 'iPhone']
+  if (p for p in mobile_platforms if p in request.user_agent.platform):
     return html_minify(render_template('mobile/index.html', **data))
+
   return html_minify(render_template('index.html', **data))
 
 def getData(country=None):
