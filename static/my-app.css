@@ -1,0 +1,7 @@
+.accordion-item-content .button-round {
+    display: inline-block;
+}
+.accordion-item-content dd {
+    padding-top: 3px;
+    margin: 0;
+}

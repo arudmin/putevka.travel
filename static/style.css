@@ -70,14 +70,6 @@ small
 .item dd
 {
     line-height: 140%;
-
-    margin: 0;
-}
-.accordion-item-content .button-round {
-    display: inline-block;
-}
-.accordion-item-content dd {
-    padding-top: 3px;
     margin: 0;
 }
 /*.item dd:hover {border: 1px #ccc dashed; zoom:1.2;}*/
