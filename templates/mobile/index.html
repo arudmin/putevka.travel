@@ -100,12 +100,22 @@
   <ul>
   {%- for tour in tours recursive -%}
     {% set itemTitle   = tour['_title'].split(',') %}
-    {% set destination = itemTitle[0] + ',' + itemTitle[1] %}
-    {% set departure   = itemTitle[2] %}
-    {% set period      = itemTitle[3] %}
-    {% set priceFrom   = itemTitle[4] | safe %}
 
+    {% if (itemTitle|length = 4 %}
+      {% set destination = itemTitle[0] %}
+      {% set departure   = itemTitle[1] %}
+      {% set period      = itemTitle[2] %}
+      {% set priceFrom   = itemTitle[3].split('.')[0] | safe %}
+    {% endif %}
 
+    {% if destination = title %}
+      {% set listTitle1 = departure + ' на ' + period %}
+      {% set listTitle2 = 'цена от ' priceFrom %}
+    {% else %}
+      {% set listTitle1 = destination + ',' + departure %}
+      {% set listTitle2 = 'на ' + period + ', от ' priceFrom %}
+    {% endif %}
+    
     <li class="accordion-item"><a href="#" class="item-content item-link">
         <div class="item-inner">
           <div class="item-title">{{ tour['_title'] | trim }}</div>
