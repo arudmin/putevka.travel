@@ -1,3 +1,6 @@
+.accordion-item{
+    border-top: 1px solid #c8c7cc;
+}
 .accordion-item-content .button-round {
     display: inline-block;
 }
