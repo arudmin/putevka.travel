@@ -46,3 +46,5 @@ function createContentPage() {
     );
 	return;
 }
+
+addToHomescreen();
