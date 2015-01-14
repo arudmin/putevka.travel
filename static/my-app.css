@@ -8,3 +8,6 @@
     padding-top: 3px;
     margin: 0;
 }
+.accordion-item-expanded {
+    margin-bottom: 30px;
+}
