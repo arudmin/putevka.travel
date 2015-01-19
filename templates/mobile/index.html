@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>My App</title>
+    <title>Putevka</title>
     <!-- Path to Framework7 Library CSS-->
     <link rel="stylesheet" href="{{ static('framework7.min.css') }}">
     <!-- Path to your custom app styles-->
@@ -95,7 +95,7 @@
             <div class="page-content">
 
         <!-- List View -->
-<div class="content-block-title">Новые предложения</div>
+<div class="content-block-title"><h3>Новые предложения</h3></div>
 <div class="list-block accordion-list">
   <ul>
   {%- for tour in tours recursive -%}
@@ -105,14 +105,14 @@
         {% set destination = itemTitle[0] %}
         {% set departure   = itemTitle[1] %}
         {% set period      = itemTitle[2] %}
-        {% set priceFrom   = itemTitle[3].split('руб')[0] | trim %}
+        {% set priceFrom   = itemTitle[3].split('.')[0] | trim %}
         {% set listTitle1  = destination + ',' + departure %}
       {% else %}
         {% set country     = itemTitle[0] %}
         {% set destination = itemTitle[1] %}
         {% set departure   = itemTitle[2] %}
         {% set period      = itemTitle[3] %}
-        {% set priceFrom   = itemTitle[4].split('руб')[0] | trim %}
+        {% set priceFrom   = itemTitle[4].split('.')[0] | trim %}
         {% set listTitle1  = country + ', ' + destination + ',' + departure %}
       {% endif %}
       {% set listTitle2 = 'на ' + period + ', от ' + priceFrom %}
@@ -121,12 +121,12 @@
         {% set destination = itemTitle[0] %}
         {% set departure   = itemTitle[1] %}
         {% set period      = itemTitle[2] %}
-        {% set priceFrom   = itemTitle[3].split('руб')[0] | trim %}
+        {% set priceFrom   = itemTitle[3].split('.')[0] | trim %}
       {% else %}
         {% set destination = itemTitle[1] %}
         {% set departure   = itemTitle[2] %}
         {% set period      = itemTitle[3] %}
-        {% set priceFrom   = itemTitle[4].split('руб')[0] | trim %}
+        {% set priceFrom   = itemTitle[4].split('.')[0] | trim %}
       {% endif %}
       {% set listTitle1 = destination + ' ' + departure + ' на ' + period %}
       {% set listTitle2 = 'цена от ' + priceFrom %}
