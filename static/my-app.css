@@ -11,3 +11,6 @@
 .accordion-item-expanded {
     margin-bottom: 30px;
 }
+.item-media img {
+	max-width: 600px;
+}
