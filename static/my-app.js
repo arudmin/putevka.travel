@@ -26,8 +26,5 @@ myApp.onPageReinit('index', function (page) {
     }
 });
 
-var device = Framework7.prototype.device;
-if (device.iphone) {
-  addToHomescreen();
-}
+addToHomescreen();
 
