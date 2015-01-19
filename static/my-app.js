@@ -54,4 +54,7 @@ function createContentPage() {
 	return;
 }
 
-addToHomescreen();
+var device = myApp.prototype.device;
+if (device.iphone) {
+  addToHomescreen();
+}
