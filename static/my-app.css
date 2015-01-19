@@ -4,6 +4,7 @@ body {
 }
 .panel {
     background: none;
+	overflow: auto;
 }
 .accordion-item {
     border-top: 1px solid #c8c7cc;
@@ -23,4 +24,7 @@ body {
 }
 .item-media img {
     max-width: 600px;
+}
+::-webkit-scrollbar { 
+    display: none; 
 }
