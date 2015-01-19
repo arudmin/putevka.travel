@@ -167,6 +167,7 @@ def getData(query=None):
     try:
       title = countries[query]
     except:
+      title = ''
       pass
   else:
     tours.pop(0)
