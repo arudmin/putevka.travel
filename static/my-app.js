@@ -10,7 +10,7 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true
 });
 
-myApp.onPageReinit('index', function (page) {
+myApp.onPageinit('index', function (page) {
     // run createContentPage func after link was clicked
     $$('.close-item-link').on('click', function () {
         myApp.closePanel();
@@ -24,7 +24,7 @@ myApp.onPageReinit('index', function (page) {
             }
         }
     }
+    addToHomescreen();
 });
 
-addToHomescreen();
 
