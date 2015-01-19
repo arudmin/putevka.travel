@@ -83,7 +83,8 @@ def main(country=None):
 # @app.route('/mobile')
 # @app.route('/mobile/')
 @app.route('/<country>')
-def mainApp(country=None):
+@app.route('/tag/<tag>')
+def mainApp(country=None, tag=None):
   data = getData(country)
   # print data
 
@@ -149,7 +150,8 @@ def getData(country=None):
       'items'      : items,
       'imageUrl'    : imageUrl,
       'description' : description[0],
-      'tags'      : tagsList[:-2].replace(' ', '').replace(u'—', '_').split(',')
+      # 'tags'      : tagsList[:-2].replace(' ', '').replace(u'—', '_').split(',')
+      'tags'      : tagsArr
     })
 
     # items.append(tagsList[:-2])
