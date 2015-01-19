@@ -17,6 +17,13 @@ myApp.onPageInit('about', function (page) {
         createContentPage();
     });
 });
+// Callbacks to run specific code for specific pages, for example for About page:
+myApp.onPageInit('index', function (page) {
+    // run createContentPage func after link was clicked
+    $$('.close-item-link').on('click', function () {
+        myApp.closePanel();
+    });
+});
 
 // Generate dynamic page
 var dynamicPageIndex = 0;

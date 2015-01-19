@@ -4,6 +4,9 @@
 .accordion-item-content .button-round {
     display: inline-block;
 }
+.accordion-item-content a {
+	border-bottom: 1px rgba(255, 45, 85, 0.4) solid;
+}
 .accordion-item-content dd {
     padding-top: 3px;
     margin: 0;
