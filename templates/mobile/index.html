@@ -174,7 +174,7 @@
 
           <!-- <p class="buttons-row"> -->
           {% for tag in tour['tags'] %}
-            <a href="{{ tag['url'] }}" class="button button-round">{{ tag['name'] | trim }}</a>
+            <a href="/tags/{{ tag['url'] }}" class="button button-round">{{ tag['name'] | trim }}</a>
           {% endfor %}
           <!-- </p> -->
         </div>

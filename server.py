@@ -74,21 +74,20 @@ def getRatingTophotels(query=None, country=''):
   # return json(data)
 
 @app.route('/json')
-@app.route('/<country>/json')
-def main(country=None):
-  data = getData(country)
+@app.route('/<query>/json')
+def main(query=None):
+  data = getData(query)
   return json(data)
 
 @app.route('/')
 # @app.route('/mobile')
 # @app.route('/mobile/')
-@app.route('/<country>')
-@app.route('/tag/<tag>')
-def mainApp(country=None, tag=None):
-  data = getData(country)
-  # print data
-
+@app.route('/<query>')
+@app.route('/tags/<query>')
+def mainApp(query=None):
   mobile_platforms = ('ipad', 'iphone', 'android') 
+
+  data = getData(query)
 
   if (request.headers.get('Content-Type') == 'application/json'):
     return json(data)
@@ -100,9 +99,9 @@ def mainApp(country=None, tag=None):
 
   return html_minify(render_template('index.html', **data))
 
-def getData(country=None):
-  if country:
-    r = requests.get('http://putevka.travel/tag/' + country)
+def getData(query=None):
+  if query:
+    r = requests.get('http://putevka.travel/tag/' + query)
   else:
     r = requests.get('http://putevka.travel')
 
@@ -131,7 +130,7 @@ def getData(country=None):
     for tag in tags:
       tagsArr.append({
         'name': tag.get_text(),
-        'url' : tag['href']
+        'url' : tag['href'].split('/')[4]
       })
       tagsList += tag.get_text() + ', '
 
@@ -164,9 +163,9 @@ def getData(country=None):
     countries[link] = title
 
   # Remove the first Post from the Main Page (infopost)
-  if country:
+  if query:
     try:
-      title = countries[country]
+      title = countries[query]
     except:
       pass
   else:

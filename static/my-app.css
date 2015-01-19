@@ -1,11 +1,18 @@
-.accordion-item{
+body {
+    background: radial-gradient(ellipse at right bottom, #6967a5 0%, #2075a1 50%, #074d55 100%);
+    background: -webkit-radial-gradient(right bottom, ellipse cover, #6967a5 0%, #2075a1 50%, #074d55 100%);
+}
+.panel {
+    background: none;
+}
+.accordion-item {
     border-top: 1px solid #c8c7cc;
 }
 .accordion-item-content .button-round {
     display: inline-block;
 }
 .accordion-item-content a {
-	border-bottom: 1px rgba(255, 45, 85, 0.4) solid;
+    border-bottom: 1px rgba(255, 45, 85, 0.4) solid;
 }
 .accordion-item-content dd {
     padding-top: 3px;
@@ -15,5 +22,5 @@
     margin-bottom: 30px;
 }
 .item-media img {
-	max-width: 600px;
+    max-width: 600px;
 }
