@@ -9,11 +9,11 @@
     <link rel="apple-touch-startup-image" href="{{static('img/icon-180.png')}}" /> 
     <title>Putevka</title>
     <!-- Path to Framework7 Library CSS-->
-    <link rel="stylesheet" href="{{ static('framework7.min.css') }}">
+    <link rel="stylesheet" href="{{ static('css/framework7.min.css') }}">
     <!-- Path to your custom app styles-->
-    <link rel="stylesheet" href="{{ static('my-app.css') }}">
-    <link rel="stylesheet" href="{{ static('addtohomescreen.css') }}">
-    <link rel="stylesheet" href="{{ static('framework7.3dpanels.min.css') }}">
+    <link rel="stylesheet" href="{{ static('css/my-app.css') }}">
+    <link rel="stylesheet" href="{{ static('css/addtohomescreen.css') }}">
+    <!-- <link rel="stylesheet" href="{{ static('css/framework7.3dpanels.min.css') }}"> -->
     <link rel="apple-touch-icon" href="{{static('img/icon-180.png')}}">
     <link rel="apple-touch-icon" sizes="76x76" href="static('img/icon-76.png')">
     <link rel="apple-touch-icon" sizes="120x120" href="{{static('img/icon-120.png')}}">
@@ -154,9 +154,9 @@
           <!-- <small>{{ itemTitle|length|string + '++' + tour['_title'] | trim }}</small> -->
           <small>Размещено: {{ tour['_published'] | trim }}</small>
           <div class="item-media"><img src="{{ tour['imageUrl'] }}" alt="tour['_title']" width="100%"></div>
-
+          <ol>
           {% for item in tour['items'] %}
-          <dd>
+          <li>
             {% if not item.split('*')[1] is defined %}
               {{ item | trim }}
             {% else %}
@@ -165,11 +165,12 @@
               <!-- <span onClick="var rating=getRating('{{resp}}');">[x]</span> -->
 
               <a title="Прочитать об отеле на сайте TopHotels.ru" target="blank" href="https://www.google.ru/#newwindow=1&q={{resp|safe|escape}} site:tophotels.ru&safe=off&btnI">{{ item.split('*')[0] }}</a>
-              {{ item.split('*')[1]|trim }}
+              {{ item.split('*')[1].split(',')[0] | trim + ', ' }} dd
+              <nobr>{{ item.split('*')[1].split(',')[1] }}</nobr>
             {% endif %}
-          </dd>
+          </li>
           {%- endfor %}
-
+          </ol>
           <p>{{ tour['description'] }}</p>
 
           <!-- <p class="buttons-row"> -->
@@ -198,10 +199,10 @@
       </div>
     </div>
     <!-- Path to Framework7 Library JS-->
-    <script type="text/javascript" src="{{ static('framework7.min.js') }}"></script>
+    <script type="text/javascript" src="{{ static('js/framework7.min.js') }}"></script>
     <!-- Path to your app js-->
-    <script type="text/javascript" src="{{ static('addtohomescreen.js') }}"></script>
-    <script type="text/javascript" src="{{ static('framework7.3dpanels.min.js') }}"></script>
-    <script type="text/javascript" src="{{ static('my-app.js') }}"></script>
+    <script type="text/javascript" src="{{ static('js/addtohomescreen.js') }}"></script>
+    <!-- // <script type="text/javascript" src="{{ static('js/framework7.3dpanels.min.js') }}"></script> -->
+    <script type="text/javascript" src="{{ static('js/my-app.js') }}"></script>
   </body>
 </html>

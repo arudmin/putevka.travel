@@ -10,7 +10,7 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true
 });
 
-myApp.onPageinit('index', function (page) {
+myApp.onPageInit('index', function (page) {
     // run createContentPage func after link was clicked
     $$('.close-item-link').on('click', function () {
         myApp.closePanel();

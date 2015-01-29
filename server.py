@@ -196,11 +196,6 @@ def getNameFromGoogle(param):
 
 
 
-
-
-
-
-
 app.jinja_env.globals['static'] = (
     lambda filename: url_for('static', filename = filename)
 )
