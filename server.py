@@ -99,6 +99,11 @@ def mainApp(query=None):
 
   return html_minify(render_template('index.html', **data, platform=request.user_agent.platform))
 
+
+
+
+
+
 def getData(query=None):
   if query:
     r = requests.get('http://putevka.travel/tag/' + query)
