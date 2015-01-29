@@ -97,7 +97,7 @@ def mainApp(query=None):
   if any(p in request.user_agent.platform for p in mobile_platforms):
     return html_minify(render_template('mobile/index.html', **data))
 
-  return html_minify(render_template('index.html', **data))
+  return html_minify(render_template('index.html', **data, platform=request.user_agent.platform))
 
 def getData(query=None):
   if query:
