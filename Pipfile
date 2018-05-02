@@ -1,0 +1,29 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[dev-packages]
+
+
+
+[packages]
+
+"beautifulsoup4" = "*"
+flask = "*"
+flask-compress = "*"
+gunicorn = "*"
+htmlmin = "*"
+itsdangerous = "*"
+"jinja2" = "*"
+lxml = "*"
+markupsafe = "*"
+requests = "*"
+werkzeug = "*"
+pytelegrambotapi = "*"
+redis = "*"
+apscheduler = "*"
+telegraphapi = "*"
+googletrans = "*"

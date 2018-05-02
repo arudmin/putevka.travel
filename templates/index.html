@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{{title}}</title>
+	<link rel="shortcut icon" type="image/gif" href="data:image/gif;base64,R0lGODlhEAAQAIAAAAAAAAAAACH5BAkAAAEALAAAAAAQABAAAAIgjI+py+0PEQiT1lkNp​ppnz4HfdoEH2W1nCJRfBMfyfBQAOw=="/>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<!-- <base target="_blank"> -->
+
+<div class="top-panel">
+	{%- if not title -%}
+		<h2>Выберите страну:&nbsp;</h2>
+	{%- endif -%}
+
+	<select id="selectCountry" onchange="if (this.value) window.location.href=this.value">
+
+	{%- if not title -%}
+		<option value="/">Выбрать</option>
+	{%- else -%}
+		<option value="/">На главную</option>
+	{%- endif -%}
+
+	{%- for country in countries -%}
+		{%- if countries[country] == title -%}
+			{%- set selected = "selected" -%}
+		{%- else -%}
+			{%- set selected = "" -%}
+		{%- endif -%}
+
+		<option {{selected}} value="/{{country}}">{{countries[country]}}</option>
+	{%- endfor %}
+
+	</select>
+</div>
+
+<dl id="container" class="hidden">
+	{%- for tour in tours recursive -%}
+	<div class="item">
+		{% set itemTitle   = tour['_title'].split(',') %}
+		{% set destination = itemTitle[0] + ',' + itemTitle[1] %}
+		{% set departure   = itemTitle[2] %}
+		{% set period      = itemTitle[3] %}
+		{% set priceFrom   = itemTitle[4] | e %}
+
+		<dt>
+			<h3>{{ tour['_title'] | trim | replace('руб.', self.rub()) }}</h3>
+			<!-- <small> {{destination}} {{departure}} {{period}} {{priceFrom}}</small> -->
+			<small>Добавлено {{ tour['_published'] | trim }}</small>
+			<img src="{{ tour['imageUrl'] }}" alt="{{tour['_title']}}"/>
+		</dt>
+
+		{% for item in tour['items'] %}
+		<dd>
+			{% set item = item.replace('**','*') %}
+
+			{% if not item.split('*')[1] is defined %}
+				{{ item | trim | replace('руб.', self.rub()) }}
+			{% else %}
+				{% set resp = tour['_title'].split(',')[0].split(' ')[0] + ' ' + item.split('*')[0] %}
+
+				<a title="Прочитать об отеле на сайте TopHotels.ru" target="blank" href="https://www.google.ru/#newwindow=1&q={{resp|safe|escape}} site:tophotels.ru&safe=off&btnI">{{ item.split('*')[0] }}</a>,
+				{{ item.split('*')[1].replace(',', '', 1).split(',')[0] | replace('руб.', self.rub()) | trim }},
+	            <nobr>
+					{{ item.split('*')[1].split(',')[2] | upper | replace('РУБ', self.rub()) | replace('.', '') | trim }}
+	            </nobr>
+			{% endif %}
+		</dd>
+		{%- endfor %}
+
+		<p>{{ tour['description'] | replace('руб.', self.rub()) }}</p>
+
+		<div class="tags">
+          {% for tag in tour['tags'] %}
+            <a href="/tags/{{ tag['url'] }}" class="button button-round">{{ tag['name'] | trim }}</a>
+          {% endfor %}
+		</div>
+
+	</div>
+	{%- endfor %}
+</dl>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/masonry/3.2.2/masonry.pkgd.min.js"></script>
+
+<script>
+(function(){
+	container = document.querySelector('#container');
+	container.className = '';
+	setTimeout(load, 300);
+	setTimeout(load, 1000);
+	setTimeout(load, 4000);
+	function load(){
+		var msnry = new Masonry(container);
+	}
+})();
+
+function getRating(query){
+	var request = new XMLHttpRequest();
+	var url = '/api/rating/tophotels/' + query.toString();
+	// var url = '/api/rating/tophotels/';
+	console.log(url);
+	request.open('GET', url, true);
+
+	request.onload = function() {
+		if (request.status >= 200 && request.status < 400) {
+			// Success!
+			var resp = request.responseText;
+			console.log('success', resp)
+			return resp;
+		} else {
+			// We reached our target server, but it returned an error
+			console.log('fail')
+		}
+	}
+	request.send();
+}
+</script>
+
+</body>
+</html>
+
+{% block rub %}
+<span class="rur">p<span>уб.</span></span>
+{% endblock %}

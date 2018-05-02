@@ -1,0 +1,5 @@
+venv
+*.pyc
+.env
+test.py
+.DS_Store

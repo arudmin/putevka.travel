@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Putevka">
+    <link rel="apple-touch-startup-image" href="{{static('img/icon-180.png')}}" /> 
+    <title>Putevka</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="{{ static('css/framework7.min.css') }}">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="{{ static('css/my-app.css') }}">
+    <link rel="stylesheet" href="{{ static('css/addtohomescreen.css') }}">
+    <link rel="stylesheet" href="{{ static('css/framework7.3dpanels.min.css') }}">
+    <link rel="apple-touch-icon" href="{{static('img/icon-180.png')}}">
+    <link rel="apple-touch-icon" sizes="76x76" href="static('img/icon-76.png')">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{static('img/icon-120.png')}}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{static('img/icon-152.png')}}">
+
+  </head>
+  <body class="theme-pink">
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="panel panel-left panel-reveal">
+      <div class="content-block">
+        <div class="content-block-title">Список стран</div>
+        <!-- <p>Left panel content goes here</p> -->
+        <div class="list-block media-list inset">
+        <ul>
+        {%- for country in countries -%}
+          {%- if countries[country] == title -%}
+           {%- set selected = "selected" -%}
+          {%- else -%}
+           {%- set selected = "" -%}
+          {%- endif -%}
+          <li>
+            <a {{selected}} class="close-item-link item-link item-content" href="/{{country}}">
+               <div class="select-country close-panel item-title">{{countries[country]}}</div>
+            </a>
+          </li>
+        {%- endfor %}
+        </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Right panel with cover effect-->
+    <div class="panel panel-right panel-cover">
+      <div class="content-block">
+        <p>Right panel content goes here</p>
+      </div>
+    </div>
+    <!-- Views-->
+    <div class="views">
+      <!-- Your main view, should have "view-main" class-->
+      <div class="view view-main">
+        <!-- Top Navbar-->
+        <div class="navbar">
+          <div class="navbar-inner">
+            <!-- We have home navbar without left link-->
+            <!-- <div class="center sliding">Awesome App</div> -->
+            <div class="center sliding">
+
+            <div class="item-input">
+            <form class="list-block store-data" action="#">
+              <select name="gender" onchange="if (this.value) window.location.href=this.value">
+  {%- if not title -%}
+    <option selected value="">Выбрать страну</option>
+  {%- else -%}
+    <option selected value="/">На главную</option>
+  {%- endif -%}
+
+
+  {%- for country in countries -%}
+    {%- if countries[country] == title -%}
+      {%- set selected = "selected ::" + title + '::' -%}
+    {%- else -%}
+      {%- set selected = "" -%}
+    {%- endif -%}
+
+    <option {{selected}} value="/{{country}}">{{countries[country]}}</option>
+  {%- endfor %}
+
+  </select>
+            </form>
+            </div>
+
+            </div>
+            <div class="right">
+              <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+        <div class="pages navbar-through toolbar-through">
+          <!-- Page, data-page contains page name-->
+          <div data-page="index" class="page">
+            <!-- Scrollable page content-->
+            <div class="page-content">
+
+<!-- List View -->
+<div class="content-block-title">Новые предложения</div>
+<div class="list-block accordion-list">
+  <ul>
+  {%- for tour in tours recursive -%}
+    {% set itemTitle = tour['_title'].split(',') %}
+    {% if title == '' %}
+      {% if itemTitle|length == 4 %}
+        {% set destination = itemTitle[0] %}
+        {% set departure   = itemTitle[1] %}
+        {% set period      = itemTitle[2] %}
+        {% set priceFrom   = itemTitle[3].split('.')[0] | trim %}
+        {% set listTitle1  = destination + ',' + departure %}
+      {% else %}
+        {% set country     = itemTitle[0] %}
+        {% set destination = itemTitle[1] %}
+        {% set departure   = itemTitle[2] %}
+        {% set period      = itemTitle[3] %}
+
+        {% if itemTitle[4] %}
+          {% set priceFrom   = itemTitle[4].split('.')[0] | trim %}
+        {% else %}
+          {% set priceFrom   = '' %}
+        {% endif %}
+        {% set listTitle1  = country + ', ' + destination + ',' + departure %}
+      {% endif %}
+      { % set listTitle2 = 'на ' + period + ', от ' + priceFrom | upper | replace('РУБ', self.rub()) %}
+    {% else %}
+      {% if itemTitle|length == 4 %}
+        {% set destination = itemTitle[0] %}
+        {% set departure   = itemTitle[1] %}
+        {% set period      = itemTitle[2] %}
+        {% set priceFrom   = itemTitle[3].split('.')[0] | trim %}
+      {% else %}
+        {% set destination = itemTitle[1] %}
+        {% set departure   = itemTitle[2] %}
+        {% set period      = itemTitle[3] %}
+        {% set priceFrom   = itemTitle[4].split('.')[0] | trim %}
+      {% endif %}
+      {% set listTitle1 = destination + ' ' + departure + ' на ' + period %}
+      {% set listTitle2 = 'цена от ' + priceFrom | upper | replace('РУБ', self.rub()) %}
+    {% endif %}
+    
+    <li class="accordion-item">
+      <a href="#" class="item-content item-link">
+        <div class="item-inner">
+          <div class="item-title">
+            {{ listTitle1 | trim }}
+            <br>
+            {{listTitle2 | trim }}
+          </div></div></a>
+      <div class="accordion-item-content">
+        <div class="content-block">
+          <small>Добавлено {{ tour['_published'] | trim }}</small>
+          <div class="item-media"><img src="{{ tour['imageUrl'] }}" alt="tour['_title']" width="100%"></div>
+          <ol>
+          {% for item in tour['items'] %}
+          <li>
+            {% set item = item.replace('**','*') %}
+            {% if not item.split('*')[1] is defined %}
+              {{ item | trim }}
+            {% else %}
+              {% set resp = tour['_title'].split(',')[0].split(' ')[0] + ' ' + item.split('*')[0] %}
+              {% set rub = '' %}
+
+              <!-- <span onClick="var rating=getRating('{{resp}}');">[x]</span> -->
+
+              <a title="Прочитать об отеле на сайте TopHotels.ru" target="blank" href="https://www.google.ru/#newwindow=1&q={{resp|safe|escape}} site:tophotels.ru&safe=off&btnI">{{ item.split('*')[0] }}</a>,
+              <!-- //{{ item.split('*')[1].split(',')[0] | trim }}// -->
+              {{ item.split('*')[1].split(',')[1] | trim }},
+              <nobr>
+                {{ item.split('*')[1].split(',')[2]| upper | replace('РУБ.', self.rub()) | replace('.', '') | trim }}
+              </nobr>
+            {% endif %}
+          </li>
+          {%- endfor %}
+          </ol>
+          <p>{{ tour['description'] | replace('руб', self.rub()) }}</p>
+
+          {% for tag in tour['tags'] %}
+            <a href="/tags/{{ tag['url'] }}" class="button button-round">{{ tag['name'] | trim }}</a>
+          {% endfor %}
+
+        </div>
+      </div>
+    </li>
+
+  {%- endfor %}
+
+
+  </ul>
+</div>
+            </div>
+          </div>
+        </div>
+        <!-- Bottom Toolbar-->
+        <div class="hidden toolbar">
+          <div class="toolbar-inner">
+          <a href="#" class="link">Link 1</a>
+          <a href="#" class="link">Link 2</a></div>
+        </div>
+      </div>
+    </div>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="{{ static('js/framework7.min.js') }}"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="{{ static('js/addtohomescreen.js') }}"></script>
+    <script type="text/javascript" src="{{ static('js/framework7.3dpanels.min.js') }}"></script>
+    <script type="text/javascript" src="{{ static('js/my-app.js') }}"></script>
+  </body>
+</html>
+{% block rub %}
+<span class="rur">p<span>уб.</span></span>
+{% endblock %}
