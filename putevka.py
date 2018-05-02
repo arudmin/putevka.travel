@@ -24,7 +24,9 @@ logging.getLogger("redis").setLevel(logging.ERROR)
 telegraph = Telegraph()
 
 redis = redis.from_url(os.environ['REDIS_URL'], charset='utf-8', decode_responses=True)
+
 bot = telebot.TeleBot(os.environ['TELEGRAM_TOKEN'])
+bot.polling()
 
 url = 'http://putevka.travel/'
 bot_name = bot.get_me().username
@@ -261,7 +263,6 @@ check_new_item()
 scheduler.start()
 scheduler.add_job(check_new_item, trigger='interval', minutes=10)
 
-bot.polling()
 
 # if __name__ == '__main__':
 #     bot.polling()
