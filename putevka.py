@@ -26,7 +26,7 @@ telegraph = Telegraph()
 redis = redis.from_url(os.environ['REDIS_URL'], charset='utf-8', decode_responses=True)
 
 bot = telebot.TeleBot(os.environ['TELEGRAM_TOKEN'])
-bot.polling()
+bot.polling(none_stop=True)
 
 url = 'http://putevka.travel/'
 bot_name = bot.get_me().username

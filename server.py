@@ -192,5 +192,4 @@ app.jinja_env.globals['static'] = (
 # if __name__ == '__main__':
 #     app.debug = True
 #     app.run('0.0.0.0', 5000)
-app.debug = True
-app.run('0.0.0.0', 5000)
+app.run(debug=True)
