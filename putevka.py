@@ -26,7 +26,6 @@ telegraph = Telegraph()
 redis = redis.from_url(os.environ['REDIS_URL'], charset='utf-8', decode_responses=True)
 
 bot = telebot.TeleBot(os.environ['TELEGRAM_TOKEN'])
-bot.polling(none_stop=True)
 
 url = 'http://putevka.travel/'
 bot_name = bot.get_me().username
@@ -263,6 +262,7 @@ check_new_item()
 scheduler.start()
 scheduler.add_job(check_new_item, trigger='interval', minutes=10)
 
+bot.polling(none_stop=True)
 
 # if __name__ == '__main__':
 #     bot.polling()
