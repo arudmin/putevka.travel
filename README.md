@@ -8,7 +8,7 @@ The data is avalible in JSON format by:
 
 2. adding suffix '/json' to the end of url (example: http://putevka.herokuapp.com/json)
 
-# Automatic Telegram Channel @PutevkaTravel_new
+# Telegram Channel @PutevkaTravel_new
 
 ### With Telegram Bot @PutevkaTravelBot
 
