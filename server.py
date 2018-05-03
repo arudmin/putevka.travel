@@ -189,7 +189,7 @@ app.jinja_env.globals['static'] = (
     lambda filename: url_for('static', filename=filename)
 )
 
-# if __name__ == '__main__':
-#     app.debug = True
-#     app.run('0.0.0.0', 5000)
-app.run(debug=True)
+if __name__ == '__main__':
+    app.debug = True
+    app.run('0.0.0.0', 5000)
+# app.run()
