@@ -12,4 +12,4 @@ The data is avalible in JSON format by:
 
 ### With Telegram Bot @PutevkaTravelBot
 
-[https://t.me/PutevkaTravel_new](t.me/PutevkaTravel_new)
+[t.me/PutevkaTravel_new](https://t.me/PutevkaTravel_new)
